@@ -9,7 +9,7 @@ from django.conf.urls.static import static
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="MATX DJANGO REST API`",
+        title="MOSH HAMEDANI ECOMMERSE DJANGO REST API",
         default_version='v1',
         description="Test description",
         terms_of_service="https://www.google.com/policies/terms/",
@@ -31,3 +31,4 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

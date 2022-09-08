@@ -39,6 +39,13 @@ class Product(models.Model):
     class Meta:
         ordering = ['title']
 
+class Photo(models.Model):
+    caption = models.CharField(max_length=80)
+    file = models.ImageField(upload_to="product_images")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='photos')
+
+    def __str__(self):
+        return self.caption
 
 class Customer(models.Model):
     MEMBERSHIP_BRONZE = "B"
