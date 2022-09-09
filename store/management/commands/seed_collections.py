@@ -1,7 +1,7 @@
 import random
 from django.core.management.base import BaseCommand
 from django_seed import Seed
-from store.models import Collection
+from store.models import Collection, Product
 
 
 class Command(BaseCommand):
@@ -16,10 +16,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         number = options.get("number")
         seeder = Seed.seeder()
-        all_collections = Collection.objects.all()
+        collections = Collection.objects.all()
+        products = Product.objects.all()
         seeder.add_entity(
             Collection, number, {
-                "title": lambda x: seeder.faker.name()
+                "title": lambda x: seeder.faker.company(),
+                'featured_product': lambda x: random.choice(products)
             }
         )
         seeder.execute()

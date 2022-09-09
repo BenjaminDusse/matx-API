@@ -28,7 +28,7 @@ class ProductViewSet(ModelViewSet):
 
 class CollectionViewSet(ModelViewSet):
     queryset = Collection.objects.annotate(
-        products_count = Count("product")).all()
+        products_count = Count("products")).all()
     serializer_class = CollectionSerializer
 
     def destroy(self, request):

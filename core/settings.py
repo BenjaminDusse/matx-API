@@ -44,8 +44,10 @@ INSTALLED_APPS = [
     'store',
     'likes',
     'tags',
-    
+    'users',   
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -185,3 +187,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
+
+
+AUTH_USER_MODEL = 'users.CustomUser'
