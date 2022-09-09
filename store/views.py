@@ -2,11 +2,12 @@ from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Count
 from store.models import *
-from store.serializers import CollectionSerializer, ProductSerializer, ProductRelationSerializer
+from store.serializers import CollectionSerializer, ProductSerializer, ProductRelationSerializer, ProductListSerializer
 from store.filters import ProductFilter
 from rest_framework.filters import SearchFilter, OrderingFilter
 from store.pagination import DefaultPagination
-
+from rest_framework.parsers import FileUploadParser
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
@@ -14,8 +15,18 @@ class ProductViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     ordering = ['title', 'description']
     pagination_class = DefaultPagination
+    filterset_class = ProductFilter
+    parser_classes = [FileUploadParser]
+    permission_classes = (AllowAny, )
 
-    
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return ProductListSerializer
+        return super().get_serializer_class()
+
+
+
     def get_serializer_context(self):
         return {"request": self.request}
 

@@ -40,6 +40,14 @@ class Product(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    def get_first_image(self):
+        """
+        Return first image of the product otherwise default image
+        """
+        if photos:
+            return photos.first()
+        return "Image not found"
+
     class Meta:
         ordering = ['title']
 
@@ -54,6 +62,7 @@ class Customer(models.Model):
         ("S", "Silver"),
         ("G", "Gold"),
     ]
+
 
     phone = models.CharField(max_length=255)
     birth_date = models.DateField(null=True)
