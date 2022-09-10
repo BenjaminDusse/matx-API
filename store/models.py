@@ -141,7 +141,7 @@ class CartItem(models.Model):
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews', null=True)
-    name = models.CharField(max_length=255)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
     description = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
 

@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 from pathlib import Path
-
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'drf_yasg',
+    'djoser',    
+    'debug_toolbar',
 
     'store',
     'likes',
@@ -47,9 +49,14 @@ INSTALLED_APPS = [
     'users',   
 ]
 
-
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -96,15 +103,19 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
+        # Password username bilan bir xil emasligi tekshiradiu 
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
+        # passwordni minimum length ini tekshiradi
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
+        # password is not commone phrase
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
+        # raqami bor ekanligini tekshiradi
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
@@ -156,10 +167,6 @@ SWAGGER_SETTINGS = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
-
-
 REST_FRAMEWORK = {
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
@@ -178,7 +185,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -191,4 +198,17 @@ REST_FRAMEWORK = {
 }
 
 
-AUTH_USER_MODEL = 'users.CustomUser'
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ("JWT", ),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
+}
+
+
+AUTH_USER_MODEL = 'users.User'
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'users.serializers.UserCreateSerializer',
+        'current_user': 'users.serializers.CustomUserSerializer'
+    }
+}

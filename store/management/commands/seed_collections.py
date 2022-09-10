@@ -21,7 +21,7 @@ class Command(BaseCommand):
         seeder.add_entity(
             Collection, number, {
                 "title": lambda x: seeder.faker.company(),
-                'featured_product': lambda x: random.choice(products)
+                # 'featured_product': lambda x: random.choice(products)
             }
         )
         seeder.execute()
