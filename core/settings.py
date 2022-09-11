@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'djoser',    
     'debug_toolbar',
+    'rest_framework_simplejwt',
 
     'store',
     'likes',
