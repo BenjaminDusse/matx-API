@@ -10,3 +10,4 @@ class ProductFilter(FilterSet):
             'collection_id': ['exact'],
             'unit_price': ['gt', 'lt'],
         }
+

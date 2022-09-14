@@ -48,7 +48,12 @@ INSTALLED_APPS = [
     'likes',
     'tags',
     'users',   
+
+    'allauth',
+    'allauth.account',
 ]
+
+SITE_ID = 1
 
 INTERNAL_IPS = [
     # ...
@@ -145,6 +150,11 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 # Swagger Settings
 SWAGGER_SETTINGS = {

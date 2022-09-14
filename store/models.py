@@ -37,16 +37,17 @@ class Product(models.Model):
     collection = models.ForeignKey('Collection', on_delete=models.PROTECT, related_name='products')
     promotions = models.ManyToManyField(Promotion, blank=True)  # related_name='products'
 
+
     def __str__(self) -> str:
         return self.title
 
-    def get_first_image(self):
-        """
-        Return first image of the product otherwise default image
-        """
-        if photos:
-            return photos.first()
-        return "Image not found"
+    # def get_first_image(self):
+    #     """
+    #     Return first image of the product otherwise default image
+    #     """
+    #     if photos:
+    #         return photos.first()
+    #     return "Image not found"
 
     class Meta:
         ordering = ['title']

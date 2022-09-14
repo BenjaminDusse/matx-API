@@ -20,7 +20,7 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     ordering = ['title', 'description']
-    pagination_class = DefaultPagination
+    pagination_class = DefaultPagination #  need work on it
     filterset_class = ProductFilter
     parser_classes = [FileUploadParser]
     permission_classes = (IsAdminOrReadOnly, )
