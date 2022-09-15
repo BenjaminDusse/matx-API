@@ -73,7 +73,6 @@ class ReviewSerializer(serializers.ModelSerializer):
         )
 
 
-
 class CartItemSerializer(serializers.ModelSerializer):
     product = ProductListSerializer()
     total_price = serializers.SerializerMethodField()

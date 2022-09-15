@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Count
 from store.models import *
-from store.serializers import CollectionSerializer, ProductSerializer, ProductRelationSerializer, ProductListSerializer, ReviewSerializer, CartSerializer, CustomerSerializer, OrderSerializer, CreateOrderSerializer, CartItemSerializer, AddCartItemSerializer, UpdateOrderSerializer
+from store.serializers import CollectionSerializer, ProductSerializer, ProductRelationSerializer, ProductListSerializer, ReviewSerializer, CartSerializer, CustomerSerializer, OrderSerializer, CreateOrderSerializer, CartItemSerializer, AddCartItemSerializer, UpdateOrderSerializer, UpdateCartItemSerializer
 from store.filters import ProductFilter
 from rest_framework.filters import SearchFilter, OrderingFilter
 from store.pagination import DefaultPagination
@@ -62,7 +62,7 @@ class CollectionViewSet(ModelViewSet):
         products_count = Count("products")).all()
     serializer_class = CollectionSerializer
 
-    def destroy(self, request):
+    def destroy(self, request, *args, **kwargs):
         if OrderItem.objects.filter(product_id=kwargs['pk']).count() > 0:
             return Response({'error': 'Product cannot deleted because it is assosiated with an order item'})
         return super().destroy(request, *args, **kwargs)
@@ -155,7 +155,7 @@ class CustomerViewSet(ModelViewSet):
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.select_related('customer').all()
     serializer_class = OrderSerializer
-    http_method_names = ['get', 'post', 'patch', 'detele', 'head', 'options']
+    http_method_names = ['get', 'post', 'patch', 'delete', 'head', 'options']
 
     def get_permissions(self):
         if self.request.method in ['PATCH', 'DELETE']:
